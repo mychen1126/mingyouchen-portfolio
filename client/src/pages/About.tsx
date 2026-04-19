@@ -19,13 +19,28 @@ export default function About() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, type: 'tween' }}
+            className="grid items-center gap-12 md:grid-cols-[1fr_auto]"
           >
-            <h1 className="text-5xl md:text-6xl font-bold font-playfair text-foreground mb-6">
-              About Me
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              Full-stack engineer based in Sydney with a passion for building scalable, maintainable systems that solve real problems.
-            </p>
+            <div>
+              <h1 className="text-5xl md:text-6xl font-bold font-playfair text-foreground mb-6">
+                About Me
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-2xl">
+                Full-stack engineer based in Sydney with a passion for building scalable, maintainable systems that solve real problems.
+              </p>
+            </div>
+            <div className="relative mx-auto grid size-56 place-items-center overflow-hidden rounded-full border-4 border-primary bg-secondary text-5xl font-bold text-primary shadow-lg shadow-primary/10 sm:size-64 md:mx-0">
+              <span aria-hidden="true">MC</span>
+              <img
+                src="/about-me.jpg"
+                alt="Ming-You Chen"
+                className="absolute inset-0 h-full w-full object-cover"
+                onError={(event) => {
+                  event.currentTarget.style.opacity = '0';
+                }}
+                style={{ objectPosition: '43% 38%' }}
+              />
+            </div>
           </motion.div>
         </div>
       </section>
