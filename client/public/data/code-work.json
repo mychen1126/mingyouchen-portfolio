@@ -1,30 +1,12 @@
 [
   {
-    "id": "graduation",
-    "title": "Graduation!",
-    "publishedAt": "2026-02-10",
-    "description": "A milestone project celebrating academic achievement.",
-    "tags": ["Personal", "Milestone"],
-    "projectUrl": "#",
-    "githubUrl": "#"
-  },
-  {
-    "id": "median-of-two-sorted-arrays",
-    "title": "Median of Two Sorted Arrays - LeetCode",
-    "publishedAt": "2024-06-24",
-    "description": "Algorithm problem solving with optimal time complexity.",
-    "tags": ["Algorithm", "LeetCode"],
-    "projectUrl": "#",
-    "githubUrl": "#"
-  },
-  {
     "id": "locale-file-python",
     "title": "Processing a \"locale\" File with Python",
     "publishedAt": "2024-06-23",
     "description": "Handling localization files and data processing in Python.",
     "tags": ["Python", "Data Processing"],
     "projectUrl": "#",
-    "githubUrl": "#"
+    "githubUrl": "https://github.com/mychen1126/UTS-locale-file-python"
   },
   {
     "id": "simple-calculator-swift",
@@ -33,16 +15,7 @@
     "description": "iOS application demonstrating Swift fundamentals.",
     "tags": ["Swift", "iOS"],
     "projectUrl": "#",
-    "githubUrl": "#"
-  },
-  {
-    "id": "intersection-of-two-arrays-csharp",
-    "title": "Intersection of Two Arrays - C#",
-    "publishedAt": "2024-03-11",
-    "description": "Algorithm implementation using C# with an efficient approach.",
-    "tags": ["C#", "Algorithm"],
-    "projectUrl": "#",
-    "githubUrl": "#"
+    "githubUrl": "https://github.com/mychen1126/UTS-simple-calculator-swift"
   },
   {
     "id": "personal-finance-management",
@@ -51,7 +24,7 @@
     "description": "Desktop application for tracking and managing personal finances.",
     "tags": ["C#", "WinForms", "Desktop"],
     "projectUrl": "#",
-    "githubUrl": "#"
+    "githubUrl": "https://github.com/mychen1126/UTS-.NetAssignment"
   },
   {
     "id": "hospital-management-system",
@@ -60,6 +33,6 @@
     "description": "Enterprise application for hospital operations and patient management.",
     "tags": ["C#", ".NET", "Database"],
     "projectUrl": "#",
-    "githubUrl": "#"
+    "githubUrl": "https://github.com/mychen1126/UTS-hospital-management-system"
   }
 ]
