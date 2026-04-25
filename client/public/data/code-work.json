@@ -1,0 +1,65 @@
+[
+  {
+    "id": "graduation",
+    "title": "Graduation!",
+    "publishedAt": "2026-02-10",
+    "description": "A milestone project celebrating academic achievement.",
+    "tags": ["Personal", "Milestone"],
+    "projectUrl": "#",
+    "githubUrl": "#"
+  },
+  {
+    "id": "median-of-two-sorted-arrays",
+    "title": "Median of Two Sorted Arrays - LeetCode",
+    "publishedAt": "2024-06-24",
+    "description": "Algorithm problem solving with optimal time complexity.",
+    "tags": ["Algorithm", "LeetCode"],
+    "projectUrl": "#",
+    "githubUrl": "#"
+  },
+  {
+    "id": "locale-file-python",
+    "title": "Processing a \"locale\" File with Python",
+    "publishedAt": "2024-06-23",
+    "description": "Handling localization files and data processing in Python.",
+    "tags": ["Python", "Data Processing"],
+    "projectUrl": "#",
+    "githubUrl": "#"
+  },
+  {
+    "id": "simple-calculator-swift",
+    "title": "Simple Calculator - Swift",
+    "publishedAt": "2024-03-15",
+    "description": "iOS application demonstrating Swift fundamentals.",
+    "tags": ["Swift", "iOS"],
+    "projectUrl": "#",
+    "githubUrl": "#"
+  },
+  {
+    "id": "intersection-of-two-arrays-csharp",
+    "title": "Intersection of Two Arrays - C#",
+    "publishedAt": "2024-03-11",
+    "description": "Algorithm implementation using C# with an efficient approach.",
+    "tags": ["C#", "Algorithm"],
+    "projectUrl": "#",
+    "githubUrl": "#"
+  },
+  {
+    "id": "personal-finance-management",
+    "title": "Windows Form Application: Personal Finance Management",
+    "publishedAt": "2024-02-23",
+    "description": "Desktop application for tracking and managing personal finances.",
+    "tags": ["C#", "WinForms", "Desktop"],
+    "projectUrl": "#",
+    "githubUrl": "#"
+  },
+  {
+    "id": "hospital-management-system",
+    "title": "Hospital Management System - .NET",
+    "publishedAt": "2024-02-15",
+    "description": "Enterprise application for hospital operations and patient management.",
+    "tags": ["C#", ".NET", "Database"],
+    "projectUrl": "#",
+    "githubUrl": "#"
+  }
+]

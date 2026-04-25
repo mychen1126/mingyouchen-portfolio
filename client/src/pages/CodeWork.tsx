@@ -1,6 +1,30 @@
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'wouter';
 import { ArrowRight, Github, ExternalLink } from 'lucide-react';
+
+type CodeWorkProject = {
+  id: string;
+  title: string;
+  publishedAt: string;
+  description: string;
+  tags: string[];
+  projectUrl: string;
+  githubUrl: string;
+};
+
+function formatProjectDate(value: string) {
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
+
+  return new Intl.DateTimeFormat('en-AU', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(date);
+}
 
 /**
  * Code & Work Page
@@ -10,57 +34,56 @@ import { ArrowRight, Github, ExternalLink } from 'lucide-react';
  * - Links to GitHub repositories
  */
 export default function CodeWork() {
-  const projects = [
-    {
-      title: 'Graduation!',
-      date: '10/2/26',
-      description: 'A milestone project celebrating academic achievement.',
-      tags: ['Personal', 'Milestone'],
-      link: '#',
-    },
-    {
-      title: 'Median of Two Sorted Arrays - LeetCode',
-      date: '24/6/24',
-      description: 'Algorithm problem solving with optimal time complexity.',
-      tags: ['Algorithm', 'LeetCode'],
-      link: '#',
-    },
-    {
-      title: 'Processing a "locale" File with Python',
-      date: '23/6/24',
-      description: 'Handling localization files and data processing in Python.',
-      tags: ['Python', 'Data Processing'],
-      link: '#',
-    },
-    {
-      title: 'Simple Calculator - Swift',
-      date: '15/3/24',
-      description: 'iOS application demonstrating Swift fundamentals.',
-      tags: ['Swift', 'iOS'],
-      link: '#',
-    },
-    {
-      title: 'Intersection of Two Arrays - C#',
-      date: '11/3/24',
-      description: 'Algorithm implementation using C# with optimal approach.',
-      tags: ['C#', 'Algorithm'],
-      link: '#',
-    },
-    {
-      title: 'Windows Form Application: Personal Finance Management',
-      date: '23/2/24',
-      description: 'Desktop application for tracking and managing personal finances.',
-      tags: ['C#', 'WinForms', 'Desktop'],
-      link: '#',
-    },
-    {
-      title: 'Hospital Management System - .NET',
-      date: '15/2/24',
-      description: 'Enterprise application for hospital operations and patient management.',
-      tags: ['C#', '.NET', 'Database'],
-      link: '#',
-    },
-  ];
+  const [projects, setProjects] = useState<CodeWorkProject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadProjects = async () => {
+      try {
+        const response = await fetch('/data/code-work.json');
+
+        if (!response.ok) {
+          throw new Error(`Failed to load project data (${response.status})`);
+        }
+
+        const data = (await response.json()) as CodeWorkProject[];
+
+        if (!isMounted) {
+          return;
+        }
+
+        setProjects(data);
+        setLoadError(null);
+      } catch (error) {
+        if (!isMounted) {
+          return;
+        }
+
+        setLoadError(error instanceof Error ? error.message : 'Failed to load project data.');
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void loadProjects();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const sortedProjects = useMemo(
+    () =>
+      [...projects].sort(
+        (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
+      ),
+    [projects],
+  );
 
   return (
     <main className="min-h-screen">
@@ -100,61 +123,71 @@ export default function CodeWork() {
             </p>
           </motion.div>
 
-          <div className="grid gap-6">
-            {projects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.05, type: 'tween' }}
-                viewport={{ once: true }}
-                className="bg-card rounded-lg border border-border/50 p-8 hover:border-primary/50 transition-all duration-300 group"
-              >
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-semibold font-playfair text-foreground mb-2 group-hover:text-primary transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      {project.date}
-                    </p>
+          {isLoading ? (
+            <div className="rounded-lg border border-border/50 bg-card p-8 text-muted-foreground">
+              Loading project data...
+            </div>
+          ) : loadError ? (
+            <div className="rounded-lg border border-destructive/30 bg-card p-8 text-destructive">
+              {loadError}
+            </div>
+          ) : (
+            <div className="grid gap-6">
+              {sortedProjects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.05, type: 'tween' }}
+                  viewport={{ once: true }}
+                  className="bg-card rounded-lg border border-border/50 p-8 hover:border-primary/50 transition-all duration-300 group"
+                >
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-semibold font-playfair text-foreground mb-2 group-hover:text-primary transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {formatProjectDate(project.publishedAt)}
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {project.description}
-                </p>
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                    {project.description}
+                  </p>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium"
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <a
+                      href={project.projectUrl}
+                      className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all"
                     >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <a
-                    href={project.link}
-                    className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all"
-                  >
-                    View Project
-                    <ArrowRight size={18} />
-                  </a>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                    title="View on GitHub"
-                  >
-                    <Github size={18} />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                      View Project
+                      <ArrowRight size={18} />
+                    </a>
+                    <a
+                      href={project.githubUrl}
+                      className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                      title="View on GitHub"
+                    >
+                      <Github size={18} />
+                    </a>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
