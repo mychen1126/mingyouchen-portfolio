@@ -30,11 +30,13 @@ export default function About() {
               </p>
             </div>
             <div className="relative mx-auto grid size-56 place-items-center overflow-hidden rounded-full border-4 border-primary bg-secondary text-5xl font-bold text-primary shadow-lg shadow-primary/10 sm:size-64 md:mx-0">
-              <span aria-hidden="true">MC</span>
+              <span aria-hidden="true" className="z-0">
+                MC
+              </span>
               <img
-                src="/about-me.jpg"
+                src="/about-me.jpg?v=1"
                 alt="Ming-You Chen"
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 z-10 h-full w-full object-cover"
                 onError={(event) => {
                   event.currentTarget.style.opacity = '0';
                 }}
