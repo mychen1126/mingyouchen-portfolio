@@ -5,7 +5,7 @@
     "publishedAt": "2024-06-23",
     "description": "Handling localization files and data processing in Python.",
     "tags": ["Python", "Data Processing"],
-    "projectUrl": "#",
+    "projectUrl": "https://github.com/mychen1126/UTS-locale-file-python",
     "githubUrl": "https://github.com/mychen1126/UTS-locale-file-python"
   },
   {
@@ -14,7 +14,7 @@
     "publishedAt": "2024-03-15",
     "description": "iOS application demonstrating Swift fundamentals.",
     "tags": ["Swift", "iOS"],
-    "projectUrl": "#",
+    "projectUrl": "https://github.com/mychen1126/UTS-simple-calculator-swift",
     "githubUrl": "https://github.com/mychen1126/UTS-simple-calculator-swift"
   },
   {
@@ -23,7 +23,7 @@
     "publishedAt": "2024-02-23",
     "description": "Desktop application for tracking and managing personal finances.",
     "tags": ["C#", "WinForms", "Desktop"],
-    "projectUrl": "#",
+    "projectUrl": "https://github.com/mychen1126/UTS-.NetAssignment",
     "githubUrl": "https://github.com/mychen1126/UTS-.NetAssignment"
   },
   {
@@ -32,7 +32,7 @@
     "publishedAt": "2024-02-15",
     "description": "Enterprise application for hospital operations and patient management.",
     "tags": ["C#", ".NET", "Database"],
-    "projectUrl": "#",
+    "projectUrl": "https://github.com/mychen1126/UTS-hospital-management-system",
     "githubUrl": "https://github.com/mychen1126/UTS-hospital-management-system"
   }
 ]

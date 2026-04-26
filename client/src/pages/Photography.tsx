@@ -1,4 +1,15 @@
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import photographyItems from './photography-data.json';
+
+type PhotographyItem = {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
+  imageAlt: string;
+};
 
 /**
  * Photography Page
@@ -8,38 +19,19 @@ import { motion } from 'framer-motion';
  * - Photography philosophy
  */
 export default function Photography() {
-  const galleryItems = [
-    {
-      title: 'Landscape Series',
-      description: 'Capturing the beauty of natural landscapes with attention to light and composition.',
-      category: 'Landscape',
-    },
-    {
-      title: 'Urban Exploration',
-      description: 'Finding patterns and stories in city environments.',
-      category: 'Urban',
-    },
-    {
-      title: 'Portrait Studies',
-      description: 'Exploring human emotion and connection through portraiture.',
-      category: 'Portrait',
-    },
-    {
-      title: 'Detail & Texture',
-      description: 'Macro photography revealing the intricate details of everyday objects.',
-      category: 'Macro',
-    },
-    {
-      title: 'Travel Documentation',
-      description: 'Visual storytelling from travels around the world.',
-      category: 'Travel',
-    },
-    {
-      title: 'Light & Shadow',
-      description: 'Exploring the interplay of light and shadow in various environments.',
-      category: 'Experimental',
-    },
-  ];
+  const imageModules = import.meta.glob('./*.{jpg,jpeg,png,webp,avif}', {
+    eager: true,
+    import: 'default',
+  }) as Record<string, string>;
+
+  const galleryItems = useMemo(
+    () =>
+      (photographyItems as PhotographyItem[]).map((item) => ({
+        ...item,
+        imageSrc: imageModules[`./${item.image}`] ?? null,
+      })),
+    [imageModules],
+  );
 
   return (
     <main className="min-h-screen">
@@ -113,20 +105,24 @@ export default function Photography() {
           <div className="grid md:grid-cols-2 gap-8">
             {galleryItems.map((item, index) => (
               <motion.div
-                key={index}
+                key={item.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.05, type: 'tween' }}
                 viewport={{ once: true }}
                 className="bg-card rounded-lg border border-border/50 overflow-hidden hover:border-primary/50 transition-all duration-300 group cursor-pointer"
               >
-                {/* Placeholder for image */}
-                <div className="w-full h-64 bg-gradient-to-br from-secondary to-secondary/50 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-4xl text-muted-foreground/30 mb-2">📷</div>
-                    <p className="text-sm text-muted-foreground">Gallery Image</p>
+                {item.imageSrc ? (
+                  <img
+                    src={item.imageSrc}
+                    alt={item.imageAlt}
+                    className="h-64 w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-64 w-full items-center justify-center bg-secondary text-center text-sm text-muted-foreground">
+                    Add {item.image} beside Photography.tsx
                   </div>
-                </div>
+                )}
 
                 {/* Content */}
                 <div className="p-8">
