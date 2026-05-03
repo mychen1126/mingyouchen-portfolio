@@ -1,0 +1,18 @@
+[
+  {
+    "id": "landscape-series",
+    "title": "Landscape Series",
+    "description": "Capturing the beauty of natural landscapes with attention to light and composition.",
+    "category": "Landscape",
+    "image": "/data/photography/photo-landscape.jpg",
+    "imageAlt": "Landscape photography series"
+  },
+  {
+    "id": "camping-exploration",
+    "title": "Camping Exploration",
+    "description": "Wild rabbit spotted",
+    "category": "Animal",
+    "image": "/data/photography/D3B905C5-DADD-4CA4-8E6C-BE39A1CA2C70_4_5005_c.jpeg",
+    "imageAlt": "Camping photography series"
+  }
+]

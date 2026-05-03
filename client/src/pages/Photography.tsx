@@ -1,6 +1,5 @@
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import photographyItems from './photography-data.json';
 
 type PhotographyItem = {
   id: string;
@@ -19,19 +18,48 @@ type PhotographyItem = {
  * - Photography philosophy
  */
 export default function Photography() {
-  const imageModules = import.meta.glob('./*.{jpg,jpeg,png,webp,avif}', {
-    eager: true,
-    import: 'default',
-  }) as Record<string, string>;
+  const [galleryItems, setGalleryItems] = useState<PhotographyItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
-  const galleryItems = useMemo(
-    () =>
-      (photographyItems as PhotographyItem[]).map((item) => ({
-        ...item,
-        imageSrc: imageModules[`./${item.image}`] ?? null,
-      })),
-    [imageModules],
-  );
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadGallery = async () => {
+      try {
+        const response = await fetch('/data/photography.json');
+
+        if (!response.ok) {
+          throw new Error(`Failed to load photography data (${response.status})`);
+        }
+
+        const data = (await response.json()) as PhotographyItem[];
+
+        if (!isMounted) {
+          return;
+        }
+
+        setGalleryItems(data);
+        setLoadError(null);
+      } catch (error) {
+        if (!isMounted) {
+          return;
+        }
+
+        setLoadError(error instanceof Error ? error.message : 'Failed to load photography data.');
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void loadGallery();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <main className="min-h-screen">
@@ -102,45 +130,58 @@ export default function Photography() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {galleryItems.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.05, type: 'tween' }}
-                viewport={{ once: true }}
-                className="bg-card rounded-lg border border-border/50 overflow-hidden hover:border-primary/50 transition-all duration-300 group cursor-pointer"
-              >
-                {item.imageSrc ? (
+          {isLoading ? (
+            <div className="rounded-lg border border-border/50 bg-card p-8 text-muted-foreground">
+              Loading photography data...
+            </div>
+          ) : loadError ? (
+            <div className="rounded-lg border border-destructive/30 bg-card p-8 text-destructive">
+              {loadError}
+            </div>
+          ) : (
+            <div className="grid gap-8 md:grid-cols-2">
+              {galleryItems.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.05, type: 'tween' }}
+                  viewport={{ once: true }}
+                  className="group cursor-pointer overflow-hidden rounded-lg border border-border/50 bg-card transition-all duration-300 hover:border-primary/50"
+                >
                   <img
-                    src={item.imageSrc}
+                    src={item.image}
                     alt={item.imageAlt}
                     className="h-64 w-full object-cover"
+                    onError={(event) => {
+                      event.currentTarget.style.display = 'none';
+                      const fallback = event.currentTarget.nextElementSibling as HTMLDivElement | null;
+                      if (fallback) {
+                        fallback.style.display = 'flex';
+                      }
+                    }}
                   />
-                ) : (
-                  <div className="flex h-64 w-full items-center justify-center bg-secondary text-center text-sm text-muted-foreground">
-                    Add {item.image} beside Photography.tsx
+                  <div className="hidden h-64 w-full items-center justify-center bg-secondary px-6 text-center text-sm text-muted-foreground">
+                    Add image at {item.image}
                   </div>
-                )}
 
-                {/* Content */}
-                <div className="p-8">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="text-xl font-semibold font-playfair text-foreground group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h3>
-                    <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">
-                      {item.category}
-                    </span>
+                  <div className="p-8">
+                    <div className="mb-3 flex items-start justify-between gap-4">
+                      <h3 className="text-xl font-semibold font-playfair text-foreground transition-colors group-hover:text-primary">
+                        {item.title}
+                      </h3>
+                      <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                        {item.category}
+                      </span>
+                    </div>
+                    <p className="text-muted-foreground leading-relaxed">
+                      {item.description}
+                    </p>
                   </div>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
