@@ -136,11 +136,12 @@ export default function CodeWork() {
               {sortedProjects.map((project, index) => (
                 <motion.div
                   key={project.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.05, type: 'tween' }}
-                  viewport={{ once: true }}
-                  className="bg-card rounded-lg border border-border/50 p-8 hover:border-primary/50 transition-all duration-300 group"
+                  whileHover={{ y: -4 }}
+                  transition={{ duration: 0.5, delay: index * 0.07, type: 'tween', ease: [0.22, 1, 0.36, 1] }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  className="bg-card rounded-lg border border-border/50 p-8 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 transition-[border-color,box-shadow] duration-300 group"
                 >
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
                     <div className="flex-1">
@@ -158,13 +159,17 @@ export default function CodeWork() {
                   </p>
 
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tags.map((tag) => (
-                      <span
+                    {project.tags.map((tag, tagIndex) => (
+                      <motion.span
                         key={tag}
-                        className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium"
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.07 + tagIndex * 0.04 }}
+                        viewport={{ once: true }}
+                        className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-medium transition-colors hover:bg-primary hover:text-primary-foreground"
                       >
                         {tag}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
 
@@ -205,7 +210,14 @@ export default function CodeWork() {
             </h2>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-card rounded-lg border border-border/50 p-8">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.5, type: 'tween', ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true }}
+                className="bg-card rounded-lg border border-border/50 p-8 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow] duration-300"
+              >
                 <h3 className="text-lg font-semibold font-playfair text-foreground mb-4">
                   Frontend
                 </h3>
@@ -219,9 +231,16 @@ export default function CodeWork() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="bg-card rounded-lg border border-border/50 p-8">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.5, delay: 0.1, type: 'tween', ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true }}
+                className="bg-card rounded-lg border border-border/50 p-8 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow] duration-300"
+              >
                 <h3 className="text-lg font-semibold font-playfair text-foreground mb-4">
                   Backend
                 </h3>
@@ -235,9 +254,16 @@ export default function CodeWork() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
 
-              <div className="bg-card rounded-lg border border-border/50 p-8">
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.5, delay: 0.2, type: 'tween', ease: [0.22, 1, 0.36, 1] }}
+                viewport={{ once: true }}
+                className="bg-card rounded-lg border border-border/50 p-8 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 transition-[border-color,box-shadow] duration-300"
+              >
                 <h3 className="text-lg font-semibold font-playfair text-foreground mb-4">
                   Database & Tools
                 </h3>
@@ -251,7 +277,7 @@ export default function CodeWork() {
                     </span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
@@ -273,10 +299,10 @@ export default function CodeWork() {
               Check out my GitHub profile for more projects, open-source contributions, and code examples.
             </p>
             <a
-              href="https://github.com"
+              href="https://github.com/mychen1126"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-all duration-200 group"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5 transition-all duration-200 group"
             >
               Visit GitHub
               <ExternalLink size={18} className="group-hover:translate-x-1 transition-transform" />

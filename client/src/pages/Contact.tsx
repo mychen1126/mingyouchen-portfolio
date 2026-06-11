@@ -77,7 +77,7 @@ export default function Contact() {
 
                 {/* GitHub */}
                 <a
-                  href="https://github.com"
+                  href="https://github.com/mychen1126"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start gap-4 p-6 rounded-lg border border-border/50 hover:border-primary/50 hover:bg-secondary/30 transition-all duration-300 group"
@@ -86,7 +86,7 @@ export default function Contact() {
                   <div>
                     <h3 className="font-semibold text-foreground mb-1">GitHub</h3>
                     <p className="text-muted-foreground group-hover:text-primary transition-colors">
-                      github.com
+                      github.com/mychen1126
                     </p>
                   </div>
                 </a>
@@ -162,7 +162,7 @@ export default function Contact() {
                 <Linkedin size={24} className="text-foreground group-hover:text-primary transition-colors" />
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/mychen1126"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 bg-card rounded-lg border border-border/50 hover:border-primary/50 hover:bg-primary/10 transition-all duration-300 group"

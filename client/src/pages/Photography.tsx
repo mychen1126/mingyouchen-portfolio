@@ -143,24 +143,33 @@ export default function Photography() {
               {galleryItems.map((item, index) => (
                 <motion.div
                   key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 32 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.05, type: 'tween' }}
-                  viewport={{ once: true }}
-                  className="group cursor-pointer overflow-hidden rounded-lg border border-border/50 bg-card transition-all duration-300 hover:border-primary/50"
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.6, delay: (index % 2) * 0.1, type: 'tween', ease: [0.22, 1, 0.36, 1] }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  className="group cursor-pointer overflow-hidden rounded-lg border border-border/50 bg-card transition-[border-color,box-shadow] duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5"
                 >
-                  <img
-                    src={item.image}
-                    alt={item.imageAlt}
-                    className="h-64 w-full object-cover"
-                    onError={(event) => {
-                      event.currentTarget.style.display = 'none';
-                      const fallback = event.currentTarget.nextElementSibling as HTMLDivElement | null;
-                      if (fallback) {
-                        fallback.style.display = 'flex';
-                      }
-                    }}
-                  />
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.imageAlt}
+                      loading="lazy"
+                      className="w-full object-cover opacity-0 blur-sm transition-[opacity,filter,transform] duration-700 ease-out group-hover:scale-105"
+                      onLoad={(event) => {
+                        event.currentTarget.classList.remove('opacity-0', 'blur-sm');
+                      }}
+                      onError={(event) => {
+                        event.currentTarget.style.display = 'none';
+                        const fallback = event.currentTarget.parentElement
+                          ?.nextElementSibling as HTMLDivElement | null;
+                        if (fallback) {
+                          fallback.style.display = 'flex';
+                        }
+                      }}
+                    />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  </div>
                   <div className="hidden h-64 w-full items-center justify-center bg-secondary px-6 text-center text-sm text-muted-foreground">
                     Add image at {item.image}
                   </div>

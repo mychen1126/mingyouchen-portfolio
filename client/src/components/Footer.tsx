@@ -24,7 +24,7 @@ export default function Footer() {
               <Linkedin size={20} className="text-foreground group-hover:text-primary transition-colors" />
             </a>
             <a
-              href="https://github.com"
+              href="https://github.com/mychen1126"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 hover:bg-primary/10 rounded-md transition-colors duration-200 group"
