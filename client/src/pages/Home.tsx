@@ -4,6 +4,9 @@ import { Link } from 'wouter';
 import { ArrowRight, ChevronDown } from 'lucide-react';
 import AnimatedText from '@/components/motion/AnimatedText';
 import TiltCard from '@/components/motion/TiltCard';
+import ParticleField from '@/components/motion/ParticleField';
+import RotatingWord from '@/components/motion/RotatingWord';
+import Magnetic from '@/components/motion/Magnetic';
 
 type FeaturedProject = {
   id: string;
@@ -93,6 +96,9 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/40"></div>
         </motion.div>
 
+        {/* Floating Particles */}
+        <ParticleField count={26} className="z-[5]" />
+
         {/* Hero Content */}
         <motion.div
           className="container max-w-6xl mx-auto px-4 relative z-10"
@@ -100,7 +106,12 @@ export default function Home() {
         >
           <div className="max-w-2xl">
             <h1 className="text-5xl md:text-7xl font-bold font-playfair text-white mb-6 leading-tight">
-              <AnimatedText text="Full Stack Engineer" delay={0.1} />
+              <AnimatedText
+                text="Full Stack Engineer"
+                delay={0.1}
+                accentWords={['Engineer']}
+                accentClassName="text-shimmer"
+              />
             </h1>
 
             <motion.div variants={containerVariants} initial="hidden" animate="visible">
@@ -108,24 +119,33 @@ export default function Home() {
                 variants={itemVariants}
                 className="text-lg md:text-xl text-white/90 mb-8 leading-relaxed"
               >
-                I build modern web products that feel fast, reliable, and beautiful. Specializing in TypeScript, React, Next.js, and Supabase. Based in Sydney.
+                I build modern web products that feel{' '}
+                <RotatingWord
+                  words={['fast', 'reliable', 'beautiful', 'intuitive']}
+                  className="font-semibold text-[oklch(0.78_0.14_200)]"
+                />
+                . Specializing in TypeScript, React, Next.js, and Supabase. Based in Sydney.
               </motion.p>
 
               <motion.div
                 variants={itemVariants}
                 className="flex flex-wrap gap-4"
               >
-                <Link href="/code-work">
-                  <a className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5 transition-all duration-200 group">
-                    View My Work
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                  </a>
-                </Link>
-                <Link href="/about">
-                  <a className="inline-flex items-center gap-2 px-6 py-3 border border-white text-white font-medium rounded-md hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-200">
-                    Learn More
-                  </a>
-                </Link>
+                <Magnetic>
+                  <Link href="/code-work">
+                    <a className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 transition-all duration-200 group">
+                      View My Work
+                      <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </Link>
+                </Magnetic>
+                <Magnetic>
+                  <Link href="/about">
+                    <a className="inline-flex items-center gap-2 px-6 py-3 border border-white text-white font-medium rounded-md hover:bg-white/10 transition-all duration-200">
+                      Learn More
+                    </a>
+                  </Link>
+                </Magnetic>
               </motion.div>
             </motion.div>
           </div>
@@ -146,6 +166,40 @@ export default function Home() {
             <ChevronDown size={28} />
           </motion.div>
         </motion.div>
+      </section>
+
+      {/* Tech Stack Marquee */}
+      <section className="group relative overflow-hidden border-b border-border/50 bg-secondary/30 py-5">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent" />
+        <div className="animate-marquee flex w-max items-center">
+          {[0, 1].map((copy) => (
+            <div key={copy} className="flex items-center" aria-hidden={copy === 1}>
+              {[
+                'TypeScript',
+                'React',
+                'Next.js',
+                'Supabase',
+                'Node.js',
+                'PostgreSQL',
+                'Tailwind CSS',
+                'C#',
+                '.NET',
+                'Python',
+                'Swift',
+                'Framer Motion',
+              ].map((tech) => (
+                <span
+                  key={tech}
+                  className="flex items-center gap-3 px-4 font-mono text-sm text-muted-foreground"
+                >
+                  {tech}
+                  <span className="size-1 rounded-full bg-primary/60" />
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* About Preview Section */}

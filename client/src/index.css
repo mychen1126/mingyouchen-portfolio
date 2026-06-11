@@ -4,6 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -143,6 +147,58 @@
   input[type="checkbox"]:not(:disabled),
   input[type="radio"]:not(:disabled) {
     @apply cursor-pointer;
+  }
+}
+
+@keyframes text-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer utilities {
+  /* Light sweep across text. Designed for light text on dark imagery. */
+  .text-shimmer {
+    background: linear-gradient(
+      110deg,
+      #ffffff 35%,
+      oklch(0.78 0.14 200) 50%,
+      #ffffff 65%
+    );
+    background-size: 200% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: text-shimmer 4s linear infinite;
+  }
+
+  /* Infinite horizontal scroll; content must be duplicated once. */
+  .animate-marquee {
+    animation: marquee 28s linear infinite;
+  }
+
+  .group:hover .animate-marquee {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .text-shimmer {
+      animation: none;
+      color: #ffffff;
+      background: none;
+    }
+    .animate-marquee {
+      animation: none;
+    }
   }
 }
 

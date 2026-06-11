@@ -5,8 +5,10 @@ type AnimatedTextProps = {
   className?: string;
   /** Seconds to wait before the first word animates in. */
   delay?: number;
-  /** Words rendered with the accent (primary) color. */
+  /** Words rendered with the accent styling. */
   accentWords?: string[];
+  /** Class applied to accent words. Defaults to the primary color. */
+  accentClassName?: string;
 };
 
 /**
@@ -19,6 +21,7 @@ export default function AnimatedText({
   className,
   delay = 0,
   accentWords = [],
+  accentClassName = 'text-primary',
 }: AnimatedTextProps) {
   const words = text.split(' ');
 
@@ -31,7 +34,7 @@ export default function AnimatedText({
           className="inline-block overflow-hidden pb-[0.12em] -mb-[0.12em] align-bottom"
         >
           <motion.span
-            className={`inline-block ${accentWords.includes(word) ? 'text-primary' : ''}`}
+            className={`inline-block ${accentWords.includes(word) ? accentClassName : ''}`}
             initial={{ y: '110%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
